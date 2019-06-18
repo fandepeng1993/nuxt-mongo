@@ -1,0 +1,132 @@
+<template>
+    <div class="login">
+        <Form ref="formInline" :model="formInline" :rules="ruleInline">
+            <p>账号：admin</p>
+            <p>密码：admin123</p>
+            <FormItem prop="user">
+                <Input type="text" v-model="formInline.user" placeholder="Username">
+                    <Icon type="ios-person-outline" slot="prepend"></Icon>
+                </Input>
+            </FormItem>
+            <FormItem prop="password">
+                <Input type="password" v-model="formInline.password" placeholder="Password">
+                    <Icon type="ios-lock-outline" slot="prepend"></Icon>
+                </Input>
+            </FormItem>
+            <FormItem style="text-align-last: justify;">
+                <!--long-->
+                <Button  type="primary" @click="handleSubmit('formInline',1)">Signin</Button>
+                <Button  type="primary" @click="handleSubmit('formInline',0)">Signup</Button>
+            </FormItem>
+        </Form>
+        <!--  <video src="http://localhost:5199/video/video.mp4" autoplay="autoplay" controls></video>-->
+    </div>
+</template>
+
+<script>
+    export default {
+        name: "home-login",
+        data() {
+            return {
+                formInline: {
+                    user: '',
+                    password: ''
+                },
+                ruleInline: {
+                    user: [
+                        {required: true, message: 'Please fill in the user name', trigger: 'blur'}
+                    ],
+                    password: [
+                        {required: true, message: 'Please fill in the password.', trigger: 'blur'},
+                        {
+                            type: 'string',
+                            min: 6,
+                            message: 'The password length cannot be less than 6 bits',
+                            trigger: 'blur'
+                        }
+                    ]
+                }
+            }
+        },
+        methods: {
+            handleSubmit(name,status) {
+                const _this = this;
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        if(status){
+                            _this.login();
+                        }else {
+                            _this.signup();
+                        }
+
+                    } else {
+                        this.$Message.error('Fail!');
+                    }
+                })
+            },
+            login() {
+                this.$auth.loginWith('local', {
+                    data: {
+                        user: {
+                            username: this.formInline.user,
+                            password: this.formInline.password,
+                        }
+                    }
+                })
+                /*this.$axios.$post('/api/login', {
+                    user: {
+                        username: this.formInline.user,
+                        password: this.formInline.password,
+                    }
+                }).then((res) => {
+                    console.log(res);
+                    // this.$router.replace('/home')
+                })*/
+            },
+            signup(){
+                this.$axios.$post('/api/signup', {
+                    user: {
+                        username: this.formInline.user,
+                        password: this.formInline.password,
+                    }
+                }).then((res) => {
+                    console.log(res);
+                    // this.$router.replace('/home')
+                })
+            },
+            createVideoDomAppend(src) {
+                //预加载video
+                let video = document.createElement('video');
+                this.$el.append(video);
+                video.src = src;
+                video.controls = true;
+            }
+        },
+        mounted() {
+            /*let config = {
+                responseType: 'blob', // 默认的
+                // `onDownloadProgress` 允许为下载处理进度事件
+                onDownloadProgress: function (progressEvent) {
+                    // 对原生进度事件的处理
+                    console.log(progressEvent, 'progressEvent')
+
+                },
+            };
+            this.$axios.$get('/api/video/video.mp4', config).then((res) => {
+                console.log(res);
+                this.videoSrc = URL.createObjectURL(res);
+                this.createVideoDomAppend(this.videoSrc)
+            })*/
+        },
+        destroyed() {
+            URL.revokeObjectURL(this.videoSrc);
+        }
+    }
+</script>
+
+<style scoped type="text/scss" rel="stylesheet/scss" lang="scss">
+    .login {
+
+    }
+
+</style>
