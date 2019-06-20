@@ -1,5 +1,7 @@
 <template>
-    <div>公司介绍</div>
+    <div>
+        <h1>关于</h1>
+    </div>
 </template>
 
 <script>
@@ -8,14 +10,12 @@
         auth: false,
         head() {
             return {
-                title:'关于',
-                meta: [
-                    {charset: 'utf-8'},
-                    {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-                    {hid: 'PARA', name: 'PARA', content: '派拉 PARA'}
-                ]
+                title:'关于'
             }
-
+        },
+        created() {
+        },
+        mounted() {
         }
     }
 </script>

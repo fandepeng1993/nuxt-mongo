@@ -1,5 +1,5 @@
 <template>
-    <div class="login">
+    <div class="nuxt-login">
         <Form ref="formInline" :model="formInline" :rules="ruleInline">
             <p>账号：admin</p>
             <p>密码：admin123</p>
@@ -72,6 +72,8 @@
                             password: this.formInline.password,
                         }
                     }
+                }).then((res)=>{
+                    this.$Message.error('登录成功!');
                 })
                 /*this.$axios.$post('/api/login', {
                     user: {
@@ -90,7 +92,7 @@
                         password: this.formInline.password,
                     }
                 }).then((res) => {
-                    console.log(res);
+                    this.$Message.error('注册成功!');
                     // this.$router.replace('/home')
                 })
             },
@@ -125,7 +127,9 @@
 </script>
 
 <style scoped type="text/scss" rel="stylesheet/scss" lang="scss">
-    .login {
+    .nuxt-login {
+        position: fixed;
+        z-index: 1;
 
     }
 

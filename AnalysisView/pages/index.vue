@@ -1,38 +1,25 @@
 <template>
-  <div>
-    <h3>主页</h3>
-    <radar-chart></radar-chart>
-    <button @click="logout">退出登录</button>
-    <ul>
-      <li v-for="item in posts">{{item.title}}</li>
-    </ul>
-    <div class="testCss">
-      <p>asdaafadsfasdfafasfasdfasdfasdfdsfadfasdfasdfadsfasdfadsfasdfasdfadfadfadfasfdadsfdfsasdfqsdfafdadfafdadfaf</p>
-    </div>
-    <Button type="primary">Primary</Button>
+  <div class="home">
+    <nuxt-layout></nuxt-layout>
   </div>
 </template>
 
 <script>
-  import radarChart from '@/components/radar-chart/index'
+  import nuxtLayout from '@/components/layout/index'
   export default {
     name: "home",
     auth: true,
     head() {
       return {
-        title:'首页',
-        meta: [
-          {charset: 'utf-8'},
-          {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-          {hid: 'PARA', name: 'PARA', content: '派拉 PARA'}
-        ]
+        title:'首页'
       }
 
     },
-    async asyncData({$axios}){
+    async asyncData({$axios,store}){
       /* $axios.setHeader('Authorization', '123');
        $axios.setHeader('Content-Type','text/plain');
        $axios.setToken('123', 'Bearer');*/
+      console.log(store.state)
       const posts = await $axios.$get('/api/posts');
       return {posts}
     },
@@ -40,7 +27,7 @@
 
     },
     created() {
-      console.log(this.$store.state);
+      // console.log(this.$store.state);
       // this.$axios.$get('/api/posts')
       // console.log(this.$axios.$get('/api/posts'))
       /*this.getData().then(data=>{
@@ -66,7 +53,7 @@
 
     },
     components:{
-      radarChart
+      nuxtLayout
     }
   }
 </script>
@@ -78,6 +65,9 @@
       overflow: hidden;
       white-space: nowrap;
   }*/
+  .home{
+
+  }
   .testCss {
     width: 30%;
     color: $border-color-1;

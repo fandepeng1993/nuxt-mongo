@@ -3,9 +3,8 @@ const pkg = require('./package');
 
 module.exports = {
     mode: 'universal',
-    vendor: ['axios'],
     server: {
-        port: 5188, // default: 3000
+        port: 5288, // default: 3000
         host: '0.0.0.0', // default: localhost,
     },
     /*
@@ -34,7 +33,8 @@ module.exports = {
     ** Global CSS
     */
     css: [
-        'iview/dist/styles/iview.css'
+        'iview/dist/styles/iview.css',
+        'assets/style/main.css'
     ],
 
     /*
@@ -43,16 +43,17 @@ module.exports = {
     plugins: [
         {src: '@/plugins/iview', ssr: true},
         {src: '@/plugins/echarts', ssr: true},
-        {src: '@/plugins/axios', ssr: false},
+        {src: '@/plugins/axios', ssr: true},
+        {src: '@/plugins/vueParticles', ssr: false},
     ],
 
     /*
     ** Nuxt.js modules
     */
     modules: [
+        '@nuxtjs/auth',
         '@nuxtjs/axios',
         '@nuxtjs/proxy',
-        '@nuxtjs/auth',
         '@nuxtjs/style-resources',
         ['@/modules/simple', {token: 'PARA'}],
     ],
@@ -60,7 +61,8 @@ module.exports = {
         localStorage: false,
         redirect: {
             login: '/login',
-            logout: '/login',
+            logout: '/',
+            callback: '/login',
             home: '/'
         },
         strategies: {
@@ -101,7 +103,8 @@ module.exports = {
     styleResources: {
         scss: [
             './assets/style/variables.scss', // 自己项目中的样式文件的路径
-            './assets/style/mixins.scss' // use underscore "_" & also file extension ".scss"
+            './assets/style/mixins.scss', // use underscore "_" & also file extension ".scss"
+            './assets/style/public.scss'
         ],
         less: [
             // './assets/style/theme/index.less'

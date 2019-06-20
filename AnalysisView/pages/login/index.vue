@@ -1,9 +1,28 @@
 <template>
-    <div class="warap">
+    <div class="login">
         <div class="loginbg">
             <div class="loginForm">
                 <home-login></home-login>
             </div>
+            <vue-particles
+                class="bgcanvas"
+                color="#dedede"
+                :particleOpacity="0.4"
+                :particlesNumber="100"
+                shapeType="circle"
+                :particleSize="4"
+                linesColor="#dedede"
+                :linesWidth="1"
+                :lineLinked="true"
+                :lineOpacity="0.4"
+                :linesDistance="150"
+                :moveSpeed="4"
+                :hoverEffect="false"
+                hoverMode="grab"
+                :clickEffect="true"
+                clickMode="push"
+            >
+            </vue-particles>
         </div>
     </div>
 </template>
@@ -14,12 +33,7 @@
         name: "login",
         head() {
             return {
-                title:'登录',
-                meta: [
-                    {charset: 'utf-8'},
-                    {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-                    {hid: 'PARA', name: 'PARA', content: '派拉 PARA'}
-                ]
+                title:'登录'
             }
 
         },
@@ -30,15 +44,18 @@
 </script>
 
 <style scoped type="text/scss" lang="scss" rel="stylesheet/scss">
-    .warap{
+    .login{
+        height: 100%;
         .loginbg{
-            height: 100vh;
+            height: 100%;
+            position: relative;
             // static
             background: url("/img/bg.png") no-repeat;
             background-size: cover;
             background-position: center;
             .loginForm{
                 height: 100%;
+                width: 100%;
                 display: flex;
                 flex: 1;
                 flex-direction:row;

@@ -1,9 +1,10 @@
 export default ({$axios, redirect}) => {
     $axios.onRequest(config => {
         //请求拦截
-       //   console.log(config);
+        // console.log(config);
+        console.log('Making request to ' + config.url)
         console.log('请求拦截');
-        //console.log('Making request to ' + config.url)
+
     });
     $axios.onResponse(response => {
         console.log('请求响应');

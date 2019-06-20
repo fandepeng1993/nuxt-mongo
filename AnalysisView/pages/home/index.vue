@@ -10,12 +10,7 @@
         auth: true,
         head() {
             return {
-                title:'主页',
-                meta: [
-                    {charset: 'utf-8'},
-                    {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-                    {hid: 'PARA', name: 'PARA', content: '派拉 PARA'}
-                ]
+                title:'主页'
             }
 
         },

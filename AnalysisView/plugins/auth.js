@@ -1,3 +1,4 @@
+
 export default function ({ app, store, redirect}) {
     if (!app.$auth.loggedIn) {
         redirect('/login');
