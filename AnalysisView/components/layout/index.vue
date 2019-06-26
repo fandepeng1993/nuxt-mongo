@@ -25,21 +25,29 @@
                 <Sider class="nuxt-slider" collapsible :collapsed-width="78" v-model="isCollapsed">
                     <div class="user-show">
                         <span v-show="!isCollapsed">Hello,</span>
-                        <strong style="color: red">管理员</strong>
+                        <strong style="color: red">{{$auth.user}}</strong>
                         <span v-show="!isCollapsed">!</span>
                     </div>
-                    <Menu class="nuxt-menu-left" :class="menuitemClasses" active-name="1-2" theme="light" width="auto">
-                        <MenuItem name="1-1">
-                            <Icon type="ios-navigate"></Icon>
-                            <span>Option 1</span>
+                    <Menu class="nuxt-menu-left" :class="menuitemClasses" active-name="1-1" theme="light" width="auto">
+                        <MenuItem name="1-1" to="/">
+                            <Icon type="md-home" />
+                            <span>
+                                首页内容
+                            </span>
                         </MenuItem>
-                        <MenuItem name="1-2">
-                            <Icon type="ios-search"></Icon>
-                            <span>Option 2</span>
+                        <MenuItem name="1-2" to="/person">
+                            <Icon type="md-person"/>
+                            <span>
+                                个人资料
+                            </span>
                         </MenuItem>
-                        <MenuItem name="1-3">
-                            <Icon type="ios-settings"></Icon>
-                            <span>Option 3</span>
+                        <MenuItem name="1-3" to="/devlang">
+                            <Icon type="logo-javascript"/>
+                            <span>开发语言</span>
+                        </MenuItem>
+                        <MenuItem name="1-4"  to="/devtools">
+                            <Icon type="ios-construct"/>
+                            <span>开发工具</span>
                         </MenuItem>
                     </Menu>
                 </Sider>
@@ -49,7 +57,11 @@
                         <h3 style="text-align: center">nuxt&express&ivew$echats管理平台</h3>
                     </Header>
                     <Content class="layout-content">
-                        Content
+                        <div class="layout-wrapper">
+                            <!--<nuxt-child  keep-alive :keep-alive-props="{exclude:'index'}"/>-->
+                            <nuxt-child  keep-alive :keep-alive-props="{exclude:''}"/>
+                        </div>
+
                     </Content>
                     <Footer class="layout-footer-center">2011-2016 &copy; TalkingData</Footer>
                 </Layout>
@@ -69,7 +81,15 @@
         methods: {
             logout() {
                 this.$axios.$post('/api/logout').then((res) => {
-                    window.location.href = 'http://localhost:5288'
+                   //  console.log(res);
+                    if(res.status){
+                        this.$Message.success('退出登录成功!');
+                        window.location.reload();
+                    }else {
+                        this.$Message.error('退出登录失败!');
+                    }
+
+                    // window.location.href = `http://${window.location.host}`
                 })
             }
         },
@@ -80,6 +100,9 @@
                     this.isCollapsed ? 'collapsed-menu' : ''
                 ]
             },
+        },
+        mounted() {
+           //   console.log(window.location)
         }
     }
 </script>
@@ -118,20 +141,26 @@
             }
             .nuxt-menu-left {
                 height: calc(100% - 64px);
-                overflow: scroll
+                overflow: auto;
             }
         }
         .layout-header-bar {
             background: #fff;
             box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
         }
-        .layouyt-content{
-            margin:24px  24px 0 24px;
-            min-height: 280px;
-            background: #fff;
+        .layout-content{
+            padding: 8px;
+            overflow: scroll;
+            height: calc(100vh  -  176px -  18px);
+            .layout-wrapper{
+                background: #fff;
+            }
         }
         .layout-footer-center {
             text-align: center;
+            padding: 0;
+            line-height: 48px;
+            background: white;
         }
         .menu-item span{
             display: inline-block;

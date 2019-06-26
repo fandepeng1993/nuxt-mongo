@@ -1,22 +1,22 @@
 <template>
-    <div class="nuxt-login">
+    <div class="nuxt-login" >
         <Form ref="formInline" :model="formInline" :rules="ruleInline">
-            <p>账号：admin</p>
-            <p>密码：admin123</p>
             <FormItem prop="user">
                 <Input type="text" v-model="formInline.user" placeholder="Username">
                     <Icon type="ios-person-outline" slot="prepend"></Icon>
                 </Input>
             </FormItem>
             <FormItem prop="password">
-                <Input type="password" v-model="formInline.password" placeholder="Password">
+                <Input type="password" v-model="formInline.password"
+                       @on-enter="handleSubmit('formInline',1)"  placeholder="Password">
                     <Icon type="ios-lock-outline" slot="prepend"></Icon>
                 </Input>
             </FormItem>
-            <FormItem style="text-align-last: justify;">
+            <!--style="text-align-last: justify;"-->
+            <FormItem >
                 <!--long-->
-                <Button  type="primary" @click="handleSubmit('formInline',1)">Signin</Button>
-                <Button  type="primary" @click="handleSubmit('formInline',0)">Signup</Button>
+                <Button  type="primary" long  @click="handleSubmit('formInline',1)">Signin</Button>
+               <!-- <Button  type="primary" @click="handleSubmit('formInline',0)">Signup</Button>-->
             </FormItem>
         </Form>
         <!--  <video src="http://localhost:5199/video/video.mp4" autoplay="autoplay" controls></video>-->
@@ -65,6 +65,20 @@
                 })
             },
             login() {
+                this.$Spin.show({
+                    render: (h) => {
+                        return h('div', [
+                            h('Icon', {
+                                'class': 'demo-spin-icon-load',
+                                props: {
+                                    type: 'ios-loading',
+                                    size: 18
+                                }
+                            }),
+                            h('div', 'Loading')
+                        ])
+                    }
+                });
                 this.$auth.loginWith('local', {
                     data: {
                         user: {
@@ -73,7 +87,9 @@
                         }
                     }
                 }).then((res)=>{
-                    this.$Message.error('登录成功!');
+                    this.$Message.success('登录成功!');
+                    this.$Spin.hide();
+                    //.this.$router.replace('/')
                 })
                 /*this.$axios.$post('/api/login', {
                     user: {

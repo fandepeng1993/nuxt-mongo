@@ -22,12 +22,21 @@ module.exports = {
         ]
     },
     router: {
-        middleware: 'auth'
+        base: '/',
+        middleware: 'auth',
+        fallback:false,
+        extendRoutes (routes, resolve) {
+            routes.push({
+                name: 'custom',
+                path: '/abouts',
+                component: resolve(__dirname, 'pages/about/index.vue')
+            })
+        }
     },
     /*
     ** Customize the progress-bar color
     */
-    loading: {color: 'pink'},
+    loading: {color: 'blue'},
 
     /*
     ** Global CSS
@@ -41,10 +50,13 @@ module.exports = {
     ** Plugins to load before mounting the App
     */
     plugins: [
+        // mode client server
         {src: '@/plugins/iview', ssr: true},
-        {src: '@/plugins/echarts', ssr: true},
+        {src: '@/plugins/echarts', ssr: false},
         {src: '@/plugins/axios', ssr: true},
         {src: '@/plugins/vueParticles', ssr: false},
+        {src: '@/plugins/html2canvas', ssr: false},
+        {src: '@/plugins/html2svg', ssr: false},
     ],
 
     /*
@@ -112,6 +124,7 @@ module.exports = {
         stylus: []
     },
     build: {
+       //  transpile: ['html2canvas']
         /*
         ** You can extend webpack config here
         */

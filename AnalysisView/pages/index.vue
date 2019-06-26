@@ -13,15 +13,14 @@
       return {
         title:'首页'
       }
-
     },
     async asyncData({$axios,store}){
       /* $axios.setHeader('Authorization', '123');
        $axios.setHeader('Content-Type','text/plain');
        $axios.setToken('123', 'Bearer');*/
       console.log(store.state)
-      const posts = await $axios.$get('/api/posts');
-      return {posts}
+      /*const posts = await $axios.$get('/api/posts');
+      return {posts}*/
     },
     fetch(){
 

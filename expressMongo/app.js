@@ -30,7 +30,7 @@ db.once('open', function() {
 app.use(expressJwt({
     secret: "secret"//加密密钥，可换
 }).unless({
-    path: ["/login", "/video/video.mp4", "/signup", "/www/","/www/file_upload"]//添加不需要token的接口
+    path: ["/login", "/video/video.mp4", "/signup", "/www/","/www/file_upload","/images/bg.png"]//添加不需要token的接口
 }));
 // 未携带token请求接口会出错，触发这个
 app.use(function(err, req, res, next) {

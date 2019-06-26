@@ -4,25 +4,29 @@
             <div class="loginForm">
                 <home-login></home-login>
             </div>
-            <vue-particles
-                class="bgcanvas"
-                color="#dedede"
-                :particleOpacity="0.4"
-                :particlesNumber="100"
-                shapeType="circle"
-                :particleSize="4"
-                linesColor="#dedede"
-                :linesWidth="1"
-                :lineLinked="true"
-                :lineOpacity="0.4"
-                :linesDistance="150"
-                :moveSpeed="4"
-                :hoverEffect="false"
-                hoverMode="grab"
-                :clickEffect="true"
-                clickMode="push"
-            >
-            </vue-particles>
+            <no-ssr placeholder="Loading...">
+                <!-- 此组件仅在客户端呈现 -->
+                <vue-particles
+                    class="bgcanvas"
+                    color="#dedede"
+                    :particleOpacity="0.4"
+                    :particlesNumber="100"
+                    shapeType="circle"
+                    :particleSize="4"
+                    linesColor="#dedede"
+                    :linesWidth="1"
+                    :lineLinked="true"
+                    :lineOpacity="0.4"
+                    :linesDistance="150"
+                    :moveSpeed="4"
+                    :hoverEffect="false"
+                    hoverMode="grab"
+                    :clickEffect="true"
+                    clickMode="push"
+                >
+                </vue-particles>
+            </no-ssr>
+
         </div>
     </div>
 </template>
@@ -50,7 +54,8 @@
             height: 100%;
             position: relative;
             // static
-            background: url("/img/bg.png") no-repeat;
+           /* background: url("~assets/img/bg.png") no-repeat;*/
+            background: url("http://localhost:5199/images/bg.png") no-repeat;
             background-size: cover;
             background-position: center;
             .loginForm{
