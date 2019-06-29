@@ -1,16 +1,20 @@
 <template>
-    <div>
-        <div>
-            <Button type="primary" ghost long @click="saveImage">保存图片</Button>
-        </div>
+    <div ref="elwrpper">
+        <a-affix :offsetTop="10"  :target="()=>target"  :style="{ position: 'absolute', top: 0, right: 0,  marginRight:'10px'}">
+            <a-button type="primary" @click="saveImage">保存图片</a-button>
+        </a-affix>
 
         <div class="htmlToImage"  ref="htmlImage">
             <readar-chart></readar-chart>
-            <div>
+            <div class="list-article">
                 <ul>
                     <li v-for="(item,index) in posts" :key="item.id">
-                        <h3>{{item.title}}</h3>
-                        <p>{{item.body}}</p>
+                        <a-skeleton active  :loading="!posts.length"  :rows="1">
+                        <div>
+                            <h2>{{item.title}}</h2>
+                            <p>{{item.body}}</p>
+                        </div>
+                        </a-skeleton>
                     </li>
                 </ul>
             </div>
@@ -24,13 +28,11 @@
         name: "index",
         head() {
             return {
-                title:'个人资料'
+                title:'首页内容'
             }
         },
         async asyncData({$axios}){
-            // console.log('asyncData',conttext);
-            const posts = await $axios.$get('/api/posts');
-            // console.log(posts)
+            const posts = await $axios.$get('/test/posts');
             return {
                 name:'index',
                 posts
@@ -41,7 +43,8 @@
         },
         data(){
             return {
-                name:'dataIndex'
+                name:'dataIndex',
+                posts:[]
             }
         },
         created(){
@@ -99,6 +102,11 @@
         },
         updated(){
             console.log('updated')
+        },
+        computed:{
+          target(){
+              return window.document.querySelector('.nuxt-content')
+          }
         },
         components:{
             readarChart

@@ -18,8 +18,8 @@
       /* $axios.setHeader('Authorization', '123');
        $axios.setHeader('Content-Type','text/plain');
        $axios.setToken('123', 'Bearer');*/
-      console.log(store.state)
-      /*const posts = await $axios.$get('/api/posts');
+     // console.log(store.state)
+      /*const posts = await $axios.$get('/test/posts');
       return {posts}*/
     },
     fetch(){
@@ -27,18 +27,18 @@
     },
     created() {
       // console.log(this.$store.state);
-      // this.$axios.$get('/api/posts')
-      // console.log(this.$axios.$get('/api/posts'))
+      // this.$axios.$get('/test/posts')
+      // console.log(this.$axios.$get('/test/posts'))
       /*this.getData().then(data=>{
           console.log(data)
       })*/
     },
     mounted(){
-      console.log(this.getData())
+      // console.log(this.getData())
     },
     methods:{
       async getData(){
-        return await this.$axios.$get('/api/posts');
+        // return await this.$axios.$get('/test/posts');
       },
       logout(){
         // 退出登录

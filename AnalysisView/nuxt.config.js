@@ -25,6 +25,7 @@ module.exports = {
         base: '/',
         middleware: 'auth',
         fallback:false,
+        //增加路由
         extendRoutes (routes, resolve) {
             routes.push({
                 name: 'custom',
@@ -42,7 +43,8 @@ module.exports = {
     ** Global CSS
     */
     css: [
-        'iview/dist/styles/iview.css',
+        /*'iview/dist/styles/iview.css',*/
+        "ant-design-vue/dist/antd.css",
         'assets/style/main.css'
     ],
 
@@ -51,12 +53,15 @@ module.exports = {
     */
     plugins: [
         // mode client server
-        {src: '@/plugins/iview', ssr: true},
+        /*{src: '@/plugins/iview', ssr: true},*/
+        {src: '@/plugins/antd', ssr: true},
         {src: '@/plugins/echarts', ssr: false},
         {src: '@/plugins/axios', ssr: true},
         {src: '@/plugins/vueParticles', ssr: false},
         {src: '@/plugins/html2canvas', ssr: false},
         {src: '@/plugins/html2svg', ssr: false},
+        { src: '~/plugins/localStorage.js', ssr: false },
+        { src: '~/plugins/iconfont.js', ssr: false }
     ],
 
     /*
@@ -91,23 +96,45 @@ module.exports = {
         plugins: [ '~/plugins/auth.js' ]
     },
     axios: {
-        // proxyHeaders: false
-        proxy: true
+        proxyHeaders: true,
+        prefix: '/fdp',
+        credentials: true,
+        proxy: true,
+        https: true,
     },
     proxy: {
-        /*'/api/!*':{
+        '/fdp/api/':{
+            /*服务端数据库接口*/
+            /*login vedio signup  users/user  logout
+            *
+            * */
             target: 'http://localhost:5199',
-            pathRewrite: {'^/api/': '/'},
+            pathRewrite: {'^/fdp/api/': '/'},
             ws:true,
             changeOrigin:true,
-        },*/
-        '/api/posts': {target: 'https://jsonplaceholder.typicode.com', pathRewrite: {'^/api/': '/'}},
-        // '/api/users': {target: 'https://jsonplaceholder.typicode.com', pathRewrite: {'^/api/': '/'}},
-        '/api/login': {target: 'http://localhost:5199', pathRewrite: {'^/api/': '/'}},
-        '/api/video': {target: 'http://localhost:5199', pathRewrite: {'^/api/': '/'}},
-        '/api/signup': {target: 'http://localhost:5199', pathRewrite: {'^/api/': '/'}},
-        '/api/users/user': {target: 'http://localhost:5199', pathRewrite: {'^/api/': '/'}},
-        '/api/logout': {target: 'http://localhost:5199', pathRewrite: {'^/api/': '/'}},
+        },
+        '/fdp/weather/':{
+            /*天气接口*/
+            target: 'https://www.tianqiapi.com',
+            pathRewrite: {'^/fdp/weather/': '/api/'},
+            ws:true,
+            changeOrigin:true,
+
+        },
+        '/fdp/ip':{
+            /*IP地址接口*/
+            target: 'http://icanhazip.com',
+            pathRewrite: {'^/fdp/ip': '/'},
+            ws:true,
+            changeOrigin:true,
+        },
+        '/fdp/test/':{
+            /*测试接口 posts/users*/
+            target: 'https://jsonplaceholder.typicode.com',
+            pathRewrite: {'^/fdp/test/': '/'},
+            ws:true,
+            changeOrigin:true,
+        }
     },
     /*
     ** Build configuration
@@ -119,7 +146,7 @@ module.exports = {
             './assets/style/public.scss'
         ],
         less: [
-            // './assets/style/theme/index.less'
+            // './assets/style/theme/iview-theme.less'
         ],
         stylus: []
     },
@@ -130,7 +157,7 @@ module.exports = {
         */
         /*less: {
             javascriptEnabled: true
-        },
+        }，
         extend(config, ctx) {
             //less & sass &scss
             const sassResourcesLoader = {
@@ -139,7 +166,7 @@ module.exports = {
                     resources: [
                         '~/assets/style/variables.scss',
                         '~/assets/style/mixins.scss',
-                        '~/assets/style/theme/index.less'
+                        '~/assets/style/theme/iview-theme.less'
                     ]
                 }
             };

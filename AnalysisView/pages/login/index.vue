@@ -54,8 +54,7 @@
             height: 100%;
             position: relative;
             // static
-           /* background: url("~assets/img/bg.png") no-repeat;*/
-            background: url("http://localhost:5199/images/bg.png") no-repeat;
+            background: url("~assets/img/bg.png") no-repeat;
             background-size: cover;
             background-position: center;
             .loginForm{

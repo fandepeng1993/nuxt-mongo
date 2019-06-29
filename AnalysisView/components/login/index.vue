@@ -1,24 +1,43 @@
 <template>
     <div class="nuxt-login" >
-        <Form ref="formInline" :model="formInline" :rules="ruleInline">
-            <FormItem prop="user">
-                <Input type="text" v-model="formInline.user" placeholder="Username">
-                    <Icon type="ios-person-outline" slot="prepend"></Icon>
-                </Input>
-            </FormItem>
-            <FormItem prop="password">
-                <Input type="password" v-model="formInline.password"
-                       @on-enter="handleSubmit('formInline',1)"  placeholder="Password">
-                    <Icon type="ios-lock-outline" slot="prepend"></Icon>
-                </Input>
-            </FormItem>
-            <!--style="text-align-last: justify;"-->
-            <FormItem >
-                <!--long-->
-                <Button  type="primary" long  @click="handleSubmit('formInline',1)">Signin</Button>
-               <!-- <Button  type="primary" @click="handleSubmit('formInline',0)">Signup</Button>-->
-            </FormItem>
-        </Form>
+        <a-spin tip="Loading..."  :spinning="spinning">
+            <a-form  id="components-form-demo-normal-login" :form="form"
+                     class="login-form"
+                     @submit="anthandleSubmit">
+                <a-form-item>
+                    <a-input
+                        v-decorator="['username',{ rules: [{ required: true, message: 'Please input your username!' }]}]"
+                        placeholder="Username"
+                    >
+                        <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
+                    </a-input>
+                </a-form-item>
+                <a-form-item>
+                    <a-input
+                        v-decorator="['password', { rules: [
+                    { required: true, message: 'Please input your Password!' },
+                    { message: 'The password length cannot be less than 6 bits!',min:6,}]
+                    }]"
+                        type="password"
+                        placeholder="Password">
+                        <a-icon  slot="prefix" type="lock" style="color: rgba(0,0,0,.25)"/>
+                    </a-input>
+                </a-form-item>
+                <a-form-item>
+                    <!--<a-checkbox  v-decorator="['remember',{valuePropName: 'checked',initialValue: true,}]">
+                        Remember me
+                    </a-checkbox>
+                    <a  class="login-form-forgot"
+                        href="">
+                        Forgot password
+                    </a>-->
+                    <a-button  type="primary" html-type="submit" class="login-form-button" >
+                        Log in
+                    </a-button>
+                    <!--Or <a href="">register now! </a>-->
+                </a-form-item>
+            </a-form>
+        </a-spin>
         <!--  <video src="http://localhost:5199/video/video.mp4" autoplay="autoplay" controls></video>-->
     </div>
 </template>
@@ -28,68 +47,36 @@
         name: "home-login",
         data() {
             return {
-                formInline: {
-                    user: '',
-                    password: ''
-                },
-                ruleInline: {
-                    user: [
-                        {required: true, message: 'Please fill in the user name', trigger: 'blur'}
-                    ],
-                    password: [
-                        {required: true, message: 'Please fill in the password.', trigger: 'blur'},
-                        {
-                            type: 'string',
-                            min: 6,
-                            message: 'The password length cannot be less than 6 bits',
-                            trigger: 'blur'
-                        }
-                    ]
-                }
+                spinning: false,
             }
         },
+        beforeCreate () {
+            this.form = this.$form.createForm(this);
+        },
         methods: {
-            handleSubmit(name,status) {
+            anthandleSubmit (e) {
                 const _this = this;
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        if(status){
-                            _this.login();
-                        }else {
-                            _this.signup();
-                        }
-
-                    } else {
-                        this.$Message.error('Fail!');
-                    }
-                })
-            },
-            login() {
-                this.$Spin.show({
-                    render: (h) => {
-                        return h('div', [
-                            h('Icon', {
-                                'class': 'demo-spin-icon-load',
-                                props: {
-                                    type: 'ios-loading',
-                                    size: 18
-                                }
-                            }),
-                            h('div', 'Loading')
-                        ])
+                e.preventDefault();
+                this.form.validateFields((err, values) => {
+                    if (!err) {
+                        _this.spinning  = true;
+                        _this.login(values);
+                    }else {
+                        this.$message.error('Fail!');
+                        this.spinning = false
                     }
                 });
+            },
+            login(values) {
                 this.$auth.loginWith('local', {
                     data: {
-                        user: {
-                            username: this.formInline.user,
-                            password: this.formInline.password,
-                        }
+                        user:values
                     }
                 }).then((res)=>{
-                    this.$Message.success('登录成功!');
-                    this.$Spin.hide();
-                    //.this.$router.replace('/')
+                    this.$message.success('登录成功!');
+                    setTimeout(()=>{
+                        this.spinning = false
+                    },500)
                 })
                 /*this.$axios.$post('/api/login', {
                     user: {
@@ -108,7 +95,10 @@
                         password: this.formInline.password,
                     }
                 }).then((res) => {
-                    this.$Message.error('注册成功!');
+                    this.$message.success('注册成功!');
+                    setTimeout(()=>{
+                        this.spinning = false
+                    },100)
                     // this.$router.replace('/home')
                 })
             },
@@ -146,7 +136,16 @@
     .nuxt-login {
         position: fixed;
         z-index: 1;
-
+        .login-form {
+            max-width: 190px;
+        }
+        .login-form-forgot {
+            float: right;
+        }
+        .login-form-button {
+            width: 100%;
+        }
     }
+
 
 </style>
