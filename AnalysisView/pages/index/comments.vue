@@ -8,8 +8,11 @@
 </template>
 
 <script>
+
     export default {
-        name: "comments"
+        name: "comments",
+        components:{
+        }
     }
 </script>
 

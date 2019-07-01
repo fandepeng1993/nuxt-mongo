@@ -163,12 +163,11 @@
                         <div class="layout-wrapper">
                            <!-- <nuxt-child  keep-alive :keep-alive-props="{exclude:'index'}"/>-->
                            <!-- <no-ssr>
-
                             </no-ssr>-->
                             <nuxt-child keep-alive :keep-alive-props="{exclude:''}"/>
                         </div>
                     </a-layout-content>
-                    <a-layout-footer class="nuxt-footer">2011-2016 &copy; TalkingData</a-layout-footer>
+                    <a-layout-footer class="nuxt-footer">2018-2020 &copy; FandePeng</a-layout-footer>
                 </a-layout>
             </a-layout>
         </a-layout>
@@ -186,17 +185,6 @@
             };
         },
         methods: {
-            logout() {
-                this.$axios.$post('/api/logout').then((res) => {
-                    if(res.status){
-                        this.$message.success('退出登录成功!');
-                        window.location.reload();
-                    }else {
-                        this.$message.error('退出登录失败!');
-                    }
-                    // window.location.href = `http://${window.location.host}`
-                })
-            },
             changeActive({key}){
                 this.syncchangeMenuActive(key);
                 this.$router.replace(key);
@@ -255,11 +243,12 @@
                 .nuxt-header-weather{
                     position: absolute;
                     z-index: 1;
-                    background: #2db7f5;
+                    // background: #2db7f5;
                     width: 100%;
                     height: 64px;
                     top: 0;
                     left: 0;
+                    color: white;
                 }
             }
             .wrapper-content{

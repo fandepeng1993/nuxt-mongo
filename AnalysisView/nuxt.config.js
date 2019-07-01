@@ -61,7 +61,7 @@ module.exports = {
         {src: '@/plugins/html2canvas', ssr: false},
         {src: '@/plugins/html2svg', ssr: false},
         { src: '~/plugins/localStorage.js', ssr: false },
-        { src: '~/plugins/iconfont.js', ssr: false }
+        { src: '~/plugins/iconfont.js', ssr: true }
     ],
 
     /*

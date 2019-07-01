@@ -1,6 +1,6 @@
 <template>
-    <div ref="elwrpper">
-        <a-affix :offsetTop="10"  :target="()=>target"  :style="{ position: 'absolute', top: 0, right: 0,  marginRight:'10px'}">
+    <div ref="elwrpper" style="position: relative">
+        <a-affix :offsetTop="0"  :target="()=>target"  :style="{ position: 'absolute', top: 0, right: 0,  marginTop:'10px',marginRight:'10px'}">
             <a-button type="primary" @click="saveImage">保存图片</a-button>
         </a-affix>
 
@@ -48,7 +48,6 @@
             }
         },
         created(){
-
             console.log('created')
         },
         mounted(){
