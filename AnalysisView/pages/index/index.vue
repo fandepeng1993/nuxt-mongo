@@ -1,5 +1,6 @@
 <template>
     <div ref="elwrpper" style="position: relative">
+        <p>首页内容</p>
         <a-affix :offsetTop="0"  :target="()=>target"  :style="{ position: 'absolute', top: 0, right: 0,  marginTop:'10px',marginRight:'10px'}">
             <a-button type="primary" @click="saveImage">保存图片</a-button>
         </a-affix>

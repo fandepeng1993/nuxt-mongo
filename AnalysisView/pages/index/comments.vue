@@ -1,17 +1,15 @@
 <template>
     <div>
-        <p>留言评论</p>
-        <icon-font type="iconai-ios"  theme="outlined" twoToneColor="#eb2f96"></icon-font>
-        <a-icon type="heart" theme="twoTone" twoToneColor="#eb2f96" />
-        <a-button type="primary">Primary</a-button>
+        <comment></comment>
     </div>
 </template>
 
 <script>
-
+    import comment from '~/components/comment/index.vue'
     export default {
         name: "comments",
         components:{
+            comment
         }
     }
 </script>
