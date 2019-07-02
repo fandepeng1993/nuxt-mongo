@@ -23,7 +23,8 @@
                         <a-icon  slot="prefix" type="lock" style="color: rgba(0,0,0,.25)"/>
                     </a-input>
                 </a-form-item>
-                <a-form-item>
+                <certification  class="validation" @success="success"></certification>
+                <a-form-item v-if="showLogin">
                     <!--<a-checkbox  v-decorator="['remember',{valuePropName: 'checked',initialValue: true,}]">
                         Remember me
                     </a-checkbox>
@@ -36,6 +37,7 @@
                     </a-button>
                     <!--Or <a href="">register now! </a>-->
                 </a-form-item>
+
             </a-form>
         </a-spin>
         <!--  <video src="http://localhost:5199/video/video.mp4" autoplay="autoplay" controls></video>-->
@@ -43,11 +45,13 @@
 </template>
 
 <script>
+    import certification from '~/components/certification/index.vue'
     export default {
         name: "home-login",
         data() {
             return {
                 spinning: false,
+                showLogin: false
             }
         },
         beforeCreate () {
@@ -108,6 +112,12 @@
                 this.$el.append(video);
                 video.src = src;
                 video.controls = true;
+            },
+            success(data){
+                console.log(data.suceess);
+                if(data.suceess){
+                    this.showLogin  = true
+                }
             }
         },
         mounted() {
@@ -128,6 +138,9 @@
         },
         destroyed() {
             URL.revokeObjectURL(this.videoSrc);
+        },
+        components:{
+            certification
         }
     }
 </script>
@@ -137,7 +150,10 @@
         position: fixed;
         z-index: 1;
         .login-form {
-            max-width: 190px;
+            max-width: 300px;
+            .validation{
+                margin-bottom:4px;
+            }
         }
         .login-form-forgot {
             float: right;
