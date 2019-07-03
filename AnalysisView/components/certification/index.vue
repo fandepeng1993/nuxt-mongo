@@ -14,8 +14,8 @@
                 { hid: 'certification', name: 'certification', content: 'certification' }
             ],
             script: [
-                { src: '//g.alicdn.com/sd/smartCaptcha/0.0.4/index.js', async: true, defer: true },
-                { src: '//g.alicdn.com/sd/quizCaptcha/0.0.1/index.js', async: true, defer: true },
+                { src: 'https://g.alicdn.com/sd/smartCaptcha/0.0.4/index.js', async: true, defer: true },
+                { src: 'https://g.alicdn.com/sd/quizCaptcha/0.0.1/index.js', async: true, defer: true },
                 // { src: '//g.alicdn.com/sd/nvc/1.1.112/guide.js', async: true, defer: true },
             ]
         },
@@ -29,7 +29,7 @@
                 this.certification();
                 window.NVC_Opt  = NVC_OPT;
                 let scriptxx  = window.document.createElement('script');
-                scriptxx.src  = '//g.alicdn.com/sd/nvc/1.1.112/guide.js';
+                scriptxx.src  = 'https://g.alicdn.com/sd/nvc/1.1.112/guide.js';
                 this.$refs.certification.append(scriptxx);
                 this.ic.init();
             })

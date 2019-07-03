@@ -80,39 +80,44 @@ app.get('/video/:name', function (req, res, next) {
 app.post('/login', function (req, res, next) {
     let username = req.body.user.username;
     let password = req.body.user.password;
+    //console.log(username,password,'usernameasdasdasdasdasdasd');
     if (!username||!password) {
         return res.status(400).send("输入username及password");
     }
     Users.findOne({name: username}, function (err, user) {
+        // console.log(!user,'!!!!!user',err);
         if(err){
-            res.send(err)
+            res.status(404).json({message: err})
         }
         if(!user) {
-            res.send('用户名和账号不存在')
+            res.status(404).json({message: '用户名和账号不存在'})
         }
-        user.comparePassword(password, function (err, isMatch) {
-            if (err){
-                res.send(err)
-            }
-            if (isMatch) {
-                // 加密，获取token
-                let authToken = jwt.sign({
-                    username: username,
-                    password: password
-                }, "secret",{
-                    expiresIn : 60*60*24// 授权时效24小时
-                });
-                // 发送给前端，存在浏览器里
-                res.status(200).json({
-                    token: authToken,
-                    success: true,
-                    message: 'success',
-                });
-            } else {
-                // return res.redirect('/lgoin');
-                res.send('登录失败')
-            }
-        });
+        if(user){
+            user.comparePassword(password, function (err, isMatch) {
+                if (err){
+                    res.status(404).json({message: err})
+                }
+                if (isMatch) {
+                    // 加密，获取token
+                    let authToken = jwt.sign({
+                        username: username,
+                        password: password
+                    }, "secret",{
+                        expiresIn : 60*60*24// 授权时效24小时
+                    });
+                    // 发送给前端，存在浏览器里
+                    res.status(200).json({
+                        token: authToken,
+                        success: true,
+                        message: 'success',
+                    });
+                } else {
+                    // return res.redirect('/lgoin');
+                    res.status(404).json({message: err})
+                    // res.send('登录失败')
+                }
+            });
+        }
     });
 });
 //注册

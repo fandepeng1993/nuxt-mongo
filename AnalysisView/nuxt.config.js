@@ -151,7 +151,7 @@ module.exports = {
         stylus: []
     },
     build: {
-       //  transpile: ['html2canvas']
+       //  transpile: ['']
         /*
         ** You can extend webpack config here
         */

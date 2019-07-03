@@ -7,6 +7,11 @@
 <script>
     export default {
         name: "person",
+        head(){
+            return {
+                title:'个人资料'
+            }
+        }
         /*asyncData(conttext){
             console.log('asyncData',conttext);
         },

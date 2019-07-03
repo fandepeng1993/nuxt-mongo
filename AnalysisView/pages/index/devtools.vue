@@ -4,7 +4,12 @@
 
 <script>
     export default {
-        name: "devtools"
+        name: "devtools",
+        head(){
+            return {
+                title:'开发工具'
+            }
+        }
     }
 </script>
 

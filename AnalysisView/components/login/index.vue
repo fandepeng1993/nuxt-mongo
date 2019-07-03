@@ -3,7 +3,8 @@
         <a-spin tip="Loading..."  :spinning="spinning">
             <a-form  id="components-form-demo-normal-login" :form="form"
                      class="login-form"
-                     @submit="anthandleSubmit">
+                     >
+                <!--@submit="anthandleSubmit"-->
                 <a-form-item>
                     <a-input
                         v-decorator="['username',{ rules: [{ required: true, message: 'Please input your username!' }]}]"
@@ -32,9 +33,12 @@
                         href="">
                         Forgot password
                     </a>-->
-                    <a-button  type="primary" html-type="submit" class="login-form-button" >
+                    <a-button  type="primary"  @click="anthandleSubmit($event,1)" class="login-form-button" >
                         Log in
                     </a-button>
+                    <!--<a-button  type="primary" @click="anthandleSubmit($event,2)" class="login-form-button" >
+                        Sign up
+                    </a-button>-->
                     <!--Or <a href="">register now! </a>-->
                 </a-form-item>
 
@@ -58,13 +62,20 @@
             this.form = this.$form.createForm(this);
         },
         methods: {
-            anthandleSubmit (e) {
+            anthandleSubmit (e,num) {
                 const _this = this;
                 e.preventDefault();
                 this.form.validateFields((err, values) => {
                     if (!err) {
                         _this.spinning  = true;
-                        _this.login(values);
+                        if(num==1){
+                            _this.login(values);
+                        }else if(num==2){
+                            _this.signup(values);
+                        }else {
+                            _this.spinning  = false;
+                            return
+                        }
                     }else {
                         this.$message.error('Fail!');
                         this.spinning = false
@@ -81,6 +92,11 @@
                     setTimeout(()=>{
                         this.spinning = false
                     },500)
+                }).catch(err=>{
+                    this.$message.error('登录失败!');
+                    setTimeout(()=>{
+                        this.spinning = false
+                    },500)
                 })
                 /*this.$axios.$post('/api/login', {
                     user: {
@@ -92,17 +108,14 @@
                     // this.$router.replace('/home')
                 })*/
             },
-            signup(){
+            signup(values){
                 this.$axios.$post('/api/signup', {
-                    user: {
-                        username: this.formInline.user,
-                        password: this.formInline.password,
-                    }
+                    user: values
                 }).then((res) => {
                     this.$message.success('注册成功!');
                     setTimeout(()=>{
                         this.spinning = false
-                    },100)
+                    },500)
                     // this.$router.replace('/home')
                 })
             },

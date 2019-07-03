@@ -4,7 +4,12 @@
 
 <script>
     export default {
-        name: "devlang"
+        name: "devlang",
+        head(){
+            return {
+                title:'开发语言'
+            }
+        },
     }
 </script>
 
