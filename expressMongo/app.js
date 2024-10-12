@@ -20,7 +20,7 @@ const Users = require('./modules/users'); // 导入模型数据模块
 // 连接数据库
 const mongoose = require('mongoose');
 // 连接fandepeng 数据库
-mongoose.connect('mongodb://localhost/fandepeng',{ useNewUrlParser: true,useCreateIndex: true});
+mongoose.connect('mongodb://localhost/fandepeng',{user: "fandepeng",pass: "fandepeng",useNewUrlParser: true,useCreateIndex: true});
 /*db.on('error', console.error.bind(console, 'mongodb fandepeng connection error:'));
 db.once('open', function() {
     console.log('mongodb fandepeng connected!');
